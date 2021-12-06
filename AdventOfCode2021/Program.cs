@@ -13,7 +13,7 @@ namespace AdventOfCode2021
         {
             int[] days = { 1, 2, 3, 4, 5, 6 };
 
-            for(int i = 1; i < days.Length; i++)
+            for(int i = 1; i <= days.Length; i++)
             {
                 string seperator = @"Input\";
                 if(Environment.OSVersion.Platform == PlatformID.Unix)
@@ -26,29 +26,20 @@ namespace AdventOfCode2021
                 for (int p = 0; p < parts.Length; p++)
                 {
                     string[] parameters = { parts[p], path };
-
-                    if (i == 6)
-                    {
-                        long result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
-                        Console.WriteLine($"Day {i} part {parts[p]} result: {result}");
-                    }
-                    else
-                    {
-                        int result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
-                        Console.WriteLine($"Day {i} part {parts[p]} result: {result}");
-                    }
+                    long result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
+                    Console.WriteLine($"Day {i} part {parts[p]} result: {result}");
                 }
             }
 
             Console.ReadKey();
         }
 
-        private static int Caller(string classToCall, string methodToCall, string[] parameters)
+        private static long Caller(string classToCall, string methodToCall, string[] parameters)
         {
             Type type = Type.GetType(classToCall);
             Object obj = Activator.CreateInstance(type);
             MethodInfo methodInfo = type.GetMethod(methodToCall);
-            return (int)methodInfo.Invoke(obj, parameters);
+            return (long)methodInfo.Invoke(obj, parameters);
         }
     }
 }

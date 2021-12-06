@@ -14,9 +14,9 @@ namespace AdventOfCode2021
             public int unit;
         }
 
-        public int Main(string part, string path)
+        public long Main(string part, string path)
         {
-            int answer = 0;
+            long answer = 0;
             if (part == "a")
             {
                 answer = Day2a(path);

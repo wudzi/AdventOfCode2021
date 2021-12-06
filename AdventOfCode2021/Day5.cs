@@ -22,7 +22,7 @@ namespace AdventOfCode2021
     public class Day5
     {
 
-        public int Main(string part, string path)
+        public long Main(string part, string path)
         {
             List<line> lines = PopulateData(path);
             List<point> points = CreatePoints(lines, part);
