@@ -15,7 +15,12 @@ namespace AdventOfCode2021
 
             for(int i = 1; i < days.Length; i++)
             {
-                string path = Path.Combine(Environment.CurrentDirectory, @"Input\", "Day" + i + ".txt");
+                string seperator = @"Input\";
+                if(Environment.OSVersion.Platform == PlatformID.Unix)
+                {
+                    seperator = @"Input/";
+                }
+                string path = Path.Combine(Environment.CurrentDirectory, seperator, "Day" + i + ".txt");
                 string[] parts = { "a", "b" };
 
                 for (int p = 0; p < parts.Length; p++)
