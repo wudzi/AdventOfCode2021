@@ -13,10 +13,10 @@ namespace AdventOfCode2021
         {
             int[] days = { 1, 2, 3, 4, 5, 6, 7};
 
-            for(int i = 1; i <= days.Length; i++)
+            for (int i = 1; i <= days.Length; i++)
             {
                 string seperator = @"Input\";
-                if(Environment.OSVersion.Platform == PlatformID.Unix)
+                if (Environment.OSVersion.Platform == PlatformID.Unix)
                 {
                     seperator = @"Input/";
                 }
@@ -25,9 +25,12 @@ namespace AdventOfCode2021
 
                 for (int p = 0; p < parts.Length; p++)
                 {
+                    var watch = new System.Diagnostics.Stopwatch();
                     string[] parameters = { parts[p], path };
+                    watch.Start();
                     long result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
-                    Console.WriteLine($"Day {i} part {parts[p]} result: {result}");
+                    watch.Stop();
+                    Console.WriteLine($"Day {i} part {parts[p]} result: {result} Executed in: {watch.ElapsedMilliseconds} ms");
                 }
             }
 
