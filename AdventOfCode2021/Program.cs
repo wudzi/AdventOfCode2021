@@ -11,7 +11,7 @@ namespace AdventOfCode2021
     {
         private static void Main(string[] args)
         {
-            int[] days = { 1, 2, 3, 4, 5, 6, 7};
+            int[] days = { 1, 2, 3, 4, 5, 6, 7, 8};
 
             for (int i = 1; i <= days.Length; i++)
             {
