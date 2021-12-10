@@ -85,7 +85,7 @@ namespace AdventOfCode2021
         {
             Dictionary<string, int> mapper = new Dictionary<string, int>();
 
-            //Map 1
+            //Not sure if there is a better way, but you can work out numbers by a process of elimination referencing known segments
             string map1 = signals
                             .Where(i => i.Length == 2)
                             .Select(i => i)
