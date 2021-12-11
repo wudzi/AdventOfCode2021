@@ -18,10 +18,64 @@ namespace AdventOfCode2021
 
             if (part == "b")
             {
-                //answer = Day1b(path);
+                answer = Day10b(path);
             }
 
             return answer;
+        }
+
+        public long Day10b(string path)
+        {
+            List<string> chunksList = Populate(path);
+            List<long> chunkscores = new List<long>();
+            
+            foreach (string chunks in chunksList)
+            {
+                List<string> lastOpener = new List<string>();
+                bool valid = true;
+                lastOpener.Add(chunks.Substring(0, 1));
+                for (int i = 1; i < chunks.Length; i++)
+                {
+                    if (lastOpener.Count > 0 && !IsValid(lastOpener.Last(), chunks.Substring(i, 1)))
+                    {
+                        valid = false;
+                        break;
+                    }
+                    if ("{[(<".IndexOf(chunks.Substring(i, 1)) >= 0)
+                    {
+                        lastOpener.Add(chunks.Substring(i, 1));
+                    }
+                    else
+                    {
+                        lastOpener.RemoveAt(lastOpener.Count - 1);
+                    }
+                }
+
+                if (lastOpener.Count > 0 && valid)
+                {
+                    long chunkScore = 0;
+                    for (int i = lastOpener.Count - 1; i >= 0; i--)
+                    {
+                        chunkScore = chunkScore * 5 + CloserScore(lastOpener[i]);
+                    }
+                    chunkscores.Add(chunkScore);
+                }
+            }
+
+            chunkscores.Sort();
+            return chunkscores[chunkscores.Count / 2];
+        }
+
+        public int CloserScore(string closer)
+        {
+            return closer switch
+            {
+                ("(") => 1,
+                ("[") => 2,
+                ("{") => 3,
+                ("<") => 4,
+                _ => 0,
+            };
         }
 
         public long Day10a(string path)
@@ -31,19 +85,23 @@ namespace AdventOfCode2021
             long chunkScore = 0;
             foreach (string chunks in chunksList)
             {
-                string lastOpener = "";
-                for (int i = 0; i < chunks.Length; i++)
+                List<string> lastOpener = new List<string>();
+                lastOpener.Add(chunks.Substring(0, 1));
+                for (int i = 1; i < chunks.Length; i++)
                 {
-                    if ("{[(<".IndexOf(chunks.Substring(i - 1, 1)) > 0)
-                    { 
-                        lastOpener = chunks.Substring(i - 1, 1);
-                    }
-                    if (!IsValid(lastOpener, chunks.Substring(i, 1)))
+                    if (lastOpener.Count > 0 && !IsValid(lastOpener.Last(), chunks.Substring(i, 1)))
                     {
                         chunkScore += Value(chunks.Substring(i, 1));
                         break;
                     }
-
+                    if ("{[(<".IndexOf(chunks.Substring(i, 1)) >= 0)
+                    {
+                        lastOpener.Add(chunks.Substring(i, 1));
+                    }
+                    else
+                    {
+                        lastOpener.RemoveAt(lastOpener.Count - 1);
+                    }
                 }
             }
             return chunkScore;
@@ -63,24 +121,19 @@ namespace AdventOfCode2021
 
         public bool IsValid(string previous, string next)
         {
-            if ("{[(<".IndexOf(next) > 0 || previous == "")
+            if (@"{[(<".IndexOf(next) >= 0 || previous == "")
             {
                 return true;
             }
 
-            switch (previous, next)
+            return (previous, next) switch
             {
-                case ("{", "}"):
-                    return true;
-                case ("[", "]"):
-                    return true;
-                case ("<", ">"):
-                    return true;
-                case ("(", "])"):
-                    return true;
-                default:
-                    return false;
-            }
+                ("{", "}") => true,
+                ("(", ")") => true,
+                ("<", ">") => true,
+                ("[", "]") => true,
+                _ => false
+            };
         }
 
         public List<string> Populate(string path)
