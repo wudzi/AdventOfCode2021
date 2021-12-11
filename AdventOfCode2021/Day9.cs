@@ -35,7 +35,7 @@ namespace AdventOfCode2021
                     IEnumerable<(int y, int x)> neighbours = CaveNeighbours(grid, y, x);
                     foreach (var coordinate in neighbours)
                     {
-                        higherNeighbours += (grid[y, x] >= grid[coordinate.x, coordinate.y]) ? 1 : 0;
+                        higherNeighbours += (grid[y, x] >= grid[coordinate.y, coordinate.x]) ? 1 : 0;
                     }
 
                     if (higherNeighbours ==0)
@@ -55,7 +55,18 @@ namespace AdventOfCode2021
             {
                 for (int x = 0; x < grid.GetLength(1); x++)
                 {
-                    basins.Add(BasinsFrom((y,x),grid,new HashSet<(int y, int x)>()));
+
+                    int higherNeighbours = 0;
+                    IEnumerable<(int y, int x)> neighbours = CaveNeighbours(grid, y, x);
+                    foreach (var coordinate in neighbours)
+                    {
+                        higherNeighbours += (grid[y, x] >= grid[coordinate.y, coordinate.x]) ? 1 : 0;
+                    }
+
+                    if (higherNeighbours == 0)
+                    {
+                        basins.Add(BasinsFrom((y, x), grid, new HashSet<(int y, int x)>()));
+                    }
                 }
             }
 
@@ -66,9 +77,9 @@ namespace AdventOfCode2021
         public int BasinsFrom((int y, int x) coordinate, int[,] grid, HashSet<(int y, int x)> basins) { 
 
             basins.Add(coordinate);
-            foreach((int x, int y) neighbour in CaveNeighbours(grid, coordinate.y, coordinate.x))
+            foreach((int y, int x) neighbour in CaveNeighbours(grid, coordinate.y, coordinate.x))
             {
-                if(grid[neighbour.y,neighbour.x] < 9 && Maths.Abs(grid[coordinate.y, coordinate.x] - grid[neighbour.y,neighbour.x]) ==1)
+                if(grid[neighbour.y,neighbour.x] < 9 && grid[coordinate.y, coordinate.x] < grid[neighbour.y,neighbour.x])
                 {
                     if (!basins.Contains(neighbour))
                     {
@@ -110,11 +121,11 @@ namespace AdventOfCode2021
 
         public IEnumerable<(int y, int x)> CaveNeighbours(int[,] grid, int yPos, int xPos)
         {
-            (int x, int y)[] offsets = new (int x, int y)[4] { (1, 0), (0, -1), (-1, 0), (0, 1) };
+            (int y, int x)[] offsets = new (int y, int x)[4] { (1, 0), (0, -1), (-1, 0), (0, 1) };
 
             for (int i = 0; i < offsets.Length; i++)
             {
-                (int x, int y) coordinate = (x: xPos + offsets[i].x, y: yPos + offsets[i].y);
+                (int y, int x) coordinate = (y: yPos + offsets[i].y, x: xPos + offsets[i].x);
                 if (coordinate.y >= 0 && coordinate.y < grid.GetLength(0) && coordinate.x >= 0 && coordinate.x < grid.GetLength(1))
                 {
                    yield return coordinate;
