@@ -92,33 +92,6 @@ namespace AdventOfCode2021
 
         }
 
-        //public int BasinsFrom(int[,] grid, int yPos, int xPos)
-        //{
-        //    int basins = 1;
-
-        //    for (int y = yPos + 1; y < grid.GetLength(0); y++)
-        //    {
-        //        if (grid[yPos + y, xPos] == grid[y, xPos] +1 && grid[yPos + y, xPos] < 9) { basins++; } else { break; }
-        //    }
-
-        //    for (int y = yPos - 1; y >=0 ; y--)
-        //    {
-        //        if (grid[yPos + y, xPos] == grid[y, xPos] -1) { basins++; } else { break; }
-        //    }
-
-        //    for (int x = xPos + 1; x < grid.GetLength(1); x++)
-        //    {
-        //        if (grid[yPos, xPos + x] == grid[yPos, x] + 1) { basins++; } else { break; }
-        //    }
-
-        //    for (int x = xPos - 1; x >=0; x--)
-        //    {
-        //        if (grid[yPos, xPos + x] == grid[yPos, x] -1) { basins++; } else { break; }
-        //    }
-
-        //    return basins;
-        //}
-
         public IEnumerable<(int y, int x)> CaveNeighbours(int[,] grid, int yPos, int xPos)
         {
             (int y, int x)[] offsets = new (int y, int x)[4] { (1, 0), (0, -1), (-1, 0), (0, 1) };
