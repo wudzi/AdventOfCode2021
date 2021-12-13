@@ -30,9 +30,13 @@ namespace AdventOfCode2021
                     watch.Start();
                     long result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
                     watch.Stop();
-                    if (i != 13 && parameters[p] != "b")
+                    if (i == 13 && parts[p] == "b")
+                        continue;
+                    else
                     {
-                        Console.WriteLine($"Day {i} part {parts[p]} result: {result} Executed in: {watch.ElapsedMilliseconds} ms");
+                        {
+                            Console.WriteLine($"Day {i} part {parts[p]} result: {result} Executed in: {watch.ElapsedMilliseconds} ms");
+                        }
                     }
                 }
             }
