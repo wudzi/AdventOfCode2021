@@ -11,7 +11,7 @@ namespace AdventOfCode2021
     {
         private static void Main(string[] args)
         { 
-            int[] days = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+            int[] days = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
             for (int i = 1; i <= days.Length; i++)
             {
@@ -30,7 +30,10 @@ namespace AdventOfCode2021
                     watch.Start();
                     long result = Caller("AdventOfCode2021.Day" + i, "Main", parameters);
                     watch.Stop();
-                    Console.WriteLine($"Day {i} part {parts[p]} result: {result} Executed in: {watch.ElapsedMilliseconds} ms");
+                    if (i != 13 && parameters[p] != "b")
+                    {
+                        Console.WriteLine($"Day {i} part {parts[p]} result: {result} Executed in: {watch.ElapsedMilliseconds} ms");
+                    }
                 }
             }
 
